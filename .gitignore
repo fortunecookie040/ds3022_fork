@@ -3,12 +3,13 @@ __pycache__/
 *.py[codz]
 *$py.class
 
-# pipenv things
-Pipfile*
+# answer keys
+*answer_key.md
 
 # DuckDB database files
 *.duckdb
 *.duckdb.wal
+*.db
 
 # C extensions
 *.so
