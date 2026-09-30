@@ -1,0 +1,21 @@
+[project]
+name = "03-transform"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bdt>=0.0.3",
+    "dbt>=2.0.0",
+    "dbt-duckdb>=1.11.0",
+    "duckdb>=1.5.5",
+    "pandas>=3.0.5",
+    "seaborn>=0.13.2",
+]
+
+[project.scripts]
+03-transform = "03_transform:main"
+
+[build-system]
+requires = ["uv_build>=0.12.9,<0.13.0"]
+build-backend = "uv_build"
