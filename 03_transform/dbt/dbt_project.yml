@@ -12,6 +12,5 @@ models:
   nyc_taxi_dbt:
     staging:
       +materialized: view
-    # marts:
-    #   +materialized: table
-    # (marts added in a later class — see future/)
+    marts:
+      +materialized: view

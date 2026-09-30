@@ -5,9 +5,9 @@ sources:
     tables:
       - name: yellow_tripdata
         description: >
-          Raw NYC yellow taxi trip records for January 2024, read
-          directly from the NYC TLC's public HTTPS parquet host —
-          no download or load step required.
+          Raw NYC yellow taxi trip records for all 12 months of 2025, read
+          directly from the NYC TLC's public HTTPS parquet host — no
+          download, load step, or S3 bucket required.
         meta:
           # dbt-duckdb's "external_location" tells the source where the
           # actual file lives. It accepts a plain file path, and DuckDB's
@@ -20,11 +20,6 @@ sources:
           #
           # We're using the remote HTTPS form here so nobody has to
           # download the file first — dbt-duckdb streams it on demand.
-          # A literal URL is used (rather than the {name} pattern)
-          # because TLC's real filenames use a hyphen in the date
-          # (yellow_tripdata_2024-01.parquet), which isn't valid in a
-          # dbt/SQL identifier — so the table name and the file name
-          # can't just be the same string.
           #
           # Covering a RANGE of months/years instead of one file works
           # differently depending on where the files live:
@@ -39,12 +34,30 @@ sources:
           #   remote HTTPS (a plain web server has no directory listing,
           #   so wildcards don't work here): pass an explicit list of
           #   URLs to DuckDB's read_parquet() instead, one per file —
-          #   mix years/months freely since each URL is spelled out:
-          #     external_location: >
-          #       read_parquet([
-          #         'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet',
-          #         'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-02.parquet',
-          #         'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-12.parquet'
-          #       ])
-          external_location: "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet"
+          #   mix years/months freely since each URL is spelled out. That's
+          #   what we do below for all 12 months of 2025.
+          # external_location: >
+          #   read_parquet([
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-02.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-03.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-04.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-05.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-06.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-07.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-08.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-09.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-10.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-11.parquet',
+          #     'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-12.parquet'
+          #   ])
+          external_location: "data/yellow_tripdata_2025-*.parquet"
 
+      - name: taxi_zone_lookup
+        description: >
+          TLC's lookup of the 265 taxi zones (LocationID -> Borough, Zone).
+          The trip data only carries the numeric pickup/dropoff IDs; this is
+          how they get human-readable names. 264 and 265 are "Unknown" and
+          "Outside of NYC", not real places.
+        meta:
+          external_location: "read_csv('https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv', header = true)"

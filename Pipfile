@@ -13,6 +13,13 @@ seaborn = "*"
 numpy = "*"
 dbt-duckdb = "*"
 dbt-core = "*"
+requests = "*"
+httpx = "*"
+asyncio = "*"
+psutil = "*"
+sympy = "*"
+bs4 = "*"
+prefect = "==3.8.7"
 
 [dev-packages]
 
