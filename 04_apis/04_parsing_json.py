@@ -14,17 +14,18 @@ response = httpx.get(URL, headers=HEADERS)
 
 # response.text is the raw JSON string; 
 # response.json() deserializes it into Python dicts/lists
-commit = response.json()
+c = response.json()
 
 # Print the full blob, pretty-printed, so we can walk through its structure
-print(json.dumps(commit, indent=2))
+print(json.dumps(c, indent=2))
 
 
 # --- Step 2: navigate the structure ---
 # Objects become dicts (index by key), arrays become lists (index by position or loop).
-#
-# print(commit["sha"])
-# print(commit["commit"]["author"]["name"])
+author_name = c["commit"]["author"]["name"]
+print(author_name)
+print(c["sha"])
+# print(ct["commit"]["author"]["name"])
 # print(commit["commit"]["author"]["date"])     # a str -- JSON has no date type
 # print(commit["stats"])                        # nested dict: total, additions, deletions
 # print(len(commit["files"]))                   # list of dicts, one per changed file
@@ -41,7 +42,7 @@ print(json.dumps(commit, indent=2))
 # Pick the fields we care about, convert types, and produce one flat dict = one row.
 # Do this for many commits and you have a list of rows ready for a dataframe or table.
 #
-# from datetime import datetime
+from datetime import datetime
 #
 # record = {
 #   "sha": commit["sha"],
