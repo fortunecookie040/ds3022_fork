@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-boto3 = "*"
 polars = "*"
 pandas = "*"
 duckdb = "*"
@@ -19,13 +18,20 @@ psutil = "*"
 sympy = "*"
 bs4 = "*"
 prefect = "==3.8.7"
+<<<<<<< HEAD
 asyncio = "*"
 httpx2 = "*"
+=======
+quixstreams = "*"
+>>>>>>> upstream
 tornado = "*"
-requests-sse = "*"
 redis = "*"
 streamlit = "*"
+<<<<<<< HEAD
 quixstreams = "*"
+=======
+websockets = "<17,>=15"
+>>>>>>> upstream
 
 [dev-packages]
 
