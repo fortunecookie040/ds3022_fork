@@ -72,9 +72,13 @@ def ingest_data():
 
 
 # name the flow something you can identify as yourself
-@flow(name="nem2p-flow")
+@flow(name="qtr7bs-flow")
 def main_flow():
     ingest_data()
 
 # it doesn't seem this flow executes when you run it. Why?
 # fix it ;^)
+# the file only *defined* main_flow and never called it. This block calls it,
+# but only when the file is run directly (python 07_...py), not when imported.
+if __name__ == "__main__":
+    main_flow()

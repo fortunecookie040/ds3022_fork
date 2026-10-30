@@ -10,6 +10,7 @@ WS_URL = os.getenv("WS_URL", "ws://127.0.0.1:8765")
 TOPIC = "puzzle"
 
 # Kafka app and topic; uncomment extra_config to force IPv4 if using "localhost"
+# creates the app with 3 diff container in KAFKA_BROKER
 app = Application(
     broker_address=KAFKA_BROKER,
     # producer_extra_config={"broker.address.family": "v4"},
@@ -19,14 +20,17 @@ topic = app.topic(name=TOPIC, value_serializer="json")
 # Read messages from the WebSocket until the server closes it, producing each to Kafka
 def produce_messages():
     try:
-        with connect(WS_URL) as ws, app.get_producer() as producer:
+        with connect(WS_URL) as ws, app.get_producer() as producer: # connect to the websockt and then get the producer from the app
             print(f"Connected to {WS_URL} (first message arrives after ~30s)")
             # Each loop blocks until the next message arrives; ends when the server closes
             for raw in ws:
                 value = json.loads(raw)
-                # do
-                # things
-                # here
+                #extract raw data from raw; 
+                value = json.loads(raw)
+                msg = topic.serialize(key = value["id"], value = value)
+                producer.produce(topic = topic.name, key = msg.key, value = msg.value)
+                print(value)
+                # To give to kafka: specify what topic to publish to, give key, give value.
         print(f"Round complete; messages produced to '{TOPIC}'")
     except Exception as e:
         print(f"Error: {e}")

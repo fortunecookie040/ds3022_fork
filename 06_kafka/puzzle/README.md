@@ -41,6 +41,7 @@ Your job is to capture every piece, route it through Kafka, and put the phrase b
    ```bash
    docker run -d --rm --name puzzle -p 8765:8765 ghcr.io/nmagee/ds3022-puzzle:latest
    ```
+  
    The container runs, then exits and removes itself after one round. To run another round, first
    **delete the `puzzle` topic** (Kafka UI → Topics → `puzzle` → Delete) so it holds only one
    round, then run the same `docker run` command again.
