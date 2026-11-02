@@ -31,6 +31,13 @@ streamlit = "*"
 quixstreams = "*"
 =======
 websockets = "<17,>=15"
+<<<<<<< HEAD
+>>>>>>> upstream
+=======
+httpx2 = "*"
+asyncio = "*"
+websocket-client = "*"
+requests_sse = "*"
 >>>>>>> upstream
 
 [dev-packages]
