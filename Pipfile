@@ -1,3 +1,4 @@
+
 [[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
@@ -18,27 +19,15 @@ psutil = "*"
 sympy = "*"
 bs4 = "*"
 prefect = "==3.8.7"
-<<<<<<< HEAD
-asyncio = "*"
-httpx2 = "*"
-=======
 quixstreams = "*"
->>>>>>> upstream
 tornado = "*"
 redis = "*"
 streamlit = "*"
-<<<<<<< HEAD
-quixstreams = "*"
-=======
 websockets = "<17,>=15"
-<<<<<<< HEAD
->>>>>>> upstream
-=======
 httpx2 = "*"
 asyncio = "*"
 websocket-client = "*"
 requests_sse = "*"
->>>>>>> upstream
 
 [dev-packages]
 

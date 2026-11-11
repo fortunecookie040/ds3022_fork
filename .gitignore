@@ -256,3 +256,8 @@ __marimo__/
 
 # Quix Streams local state directory
 state/
+
+# bluesky producer runtime files
+06_kafka/bluesky/bluesky-producer.log
+06_kafka/bluesky/jetstream_cursor.txt.tmp
+06_kafka/bluesky/bluesky-consumer.log
