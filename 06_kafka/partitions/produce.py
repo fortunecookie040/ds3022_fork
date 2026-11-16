@@ -12,13 +12,13 @@ from quixstreams import Application
 
 BROKER = os.getenv("KAFKA_BROKER", "127.0.0.1:19092,127.0.0.1:29092,127.0.0.1:39092")
 TOPIC = "orders-by-customer"
-NUM_PARTITIONS = 3
+NUM_PARTITIONS = 3    #declares how many partitions, do not create like 1000 partitions
 # quixstreams uses the murmur2 partitioner (Java-compatible); these keys split 2/2/2 across 3 partitions
 KEYS = ["alice", "bob", "carol", "dave", "erin", "frank"]
 NUM_MESSAGES = 900
 
 
-def ensure_topic():
+def ensure_topic(): #ensures the topic has everything we want
     """Create the topic with exactly 3 partitions if it doesn't exist."""
     admin = AdminClient({"bootstrap.servers": BROKER})
     existing = admin.list_topics(timeout=10).topics
@@ -37,7 +37,7 @@ def ensure_topic():
 placements = defaultdict(set)
 
 
-def on_delivery(err, msg):
+def on_delivery(err, msg): # calls back
     """Called once per message when the broker confirms (or rejects) it."""
     if err is not None:
         print(f"  FAILED: {err}")
@@ -69,7 +69,7 @@ def main():
         producer.flush()  # wait for all delivery callbacks before summarizing
 
     print("\nSummary: each key should map to exactly ONE partition")
-    for key in sorted(placements):
+    for key in sorted(placements): #uses hash to into which partition
         parts = sorted(placements[key])
         status = "OK" if len(parts) == 1 else "UNEXPECTED"
         print(f"  {key:<6} -> {parts}  {status}")

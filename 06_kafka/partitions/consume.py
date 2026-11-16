@@ -39,6 +39,7 @@ def on_revoke(consumer, partitions):
 
 
 with app.get_consumer() as consumer:
+    #kafka assigns partitions here: each partition goes to eactly one consumer in the group
     consumer.subscribe([TOPIC], on_assign=on_assign, on_revoke=on_revoke)
     try:
         while True:  # run until Ctrl+C so instances can be started before the producer
@@ -50,7 +51,7 @@ with app.get_consumer() as consumer:
                 continue
             key = msg.key().decode()
             order = json.loads(msg.value())["order_id"]
-            by_partition[msg.partition()].append((key, order))
+            by_partition[msg.partition()].append((key, order)) #for printing later
             print(f"[{ME}] partition {msg.partition()}  offset {msg.offset():<4} key={key:<6} order={order}")
     except KeyboardInterrupt:
         pass
