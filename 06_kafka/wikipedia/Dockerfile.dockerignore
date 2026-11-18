@@ -1,0 +1,5 @@
+# Allowlist: the build context is the repo root, so ignore everything
+# (.venv, .git, *.duckdb, ...) except the two files the image needs.
+*
+!requirements.txt
+!06_kafka/wikipedia/wikipedia-producer.py
