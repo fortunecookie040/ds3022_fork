@@ -14,3 +14,12 @@ def std_dev(values):
 if __name__ == "__main__":
     data = [2, 4, 4, 4, 5, 5, 7, 9]
     print(f"Standard deviation of {data}: {std_dev(data)}")
+
+
+
+# Testing
+# if given a list, does it work
+# if given nothing
+# if pass in 1 number --> 0
+# if pass in same numebr --> 0 
+
