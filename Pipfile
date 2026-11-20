@@ -32,6 +32,7 @@ orjson = "*"
 fastapi = {extras = ["standard"], version = "*"}
 pymongo = "*"
 pytest = "*"
+openai = "*"
 
 [dev-packages]
 
